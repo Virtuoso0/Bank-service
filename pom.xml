@@ -33,6 +33,12 @@
             <version>${assertj-core.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.4.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -42,7 +48,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <release>14</release>
+                    <release>18</release>
                     <compilerArgs>--enable-preview</compilerArgs>
                 </configuration>
             </plugin>

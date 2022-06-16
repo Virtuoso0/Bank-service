@@ -48,4 +48,8 @@ public class Client {
     public int hashCode() {
         return Objects.hash(name, email, balance);
     }
+
+    public String getName() {
+        return name;
+    }
 }

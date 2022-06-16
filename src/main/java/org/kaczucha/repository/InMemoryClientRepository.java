@@ -1,5 +1,6 @@
 package org.kaczucha.repository;
 
+import jdk.jshell.spi.ExecutionControl;
 import org.kaczucha.Client;
 
 import java.util.List;
@@ -25,5 +26,10 @@ public class InMemoryClientRepository implements ClientRepository {
                 .orElseThrow(() -> new NoSuchElementException(
                         String.format("Client with following email: %s not found!", email)
                 ));
+    }
+
+    @Override
+    public void deleteByEmail(String email) {
+
     }
 }

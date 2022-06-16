@@ -1,10 +1,9 @@
 package org.kaczucha;
 
-import org.kaczucha.repository.InMemoryClientRepository;
+import org.kaczucha.repository.ClientRepository;
+import org.kaczucha.repository.JDBCClientRepository;
 import org.kaczucha.service.BankService;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Scanner;
 
 public class Main {
@@ -15,14 +14,15 @@ public class Main {
     }
 
     public void run() {
-        final InMemoryClientRepository repository = new InMemoryClientRepository(new ArrayList<>());
+        final ClientRepository repository = new JDBCClientRepository();
         bankService = new BankService(repository);
 
         try (Scanner scanner = new Scanner(System.in)) {
             while (true) {
                 System.out.println("1 - add user");
                 System.out.println("2 - find user");
-                System.out.println("3 - exit app");
+                System.out.println("3 - delete user");
+                System.out.println("4 - exit app");
                 final String next = scanner.next();
                 if (next.equals("1")) {
                     addUser(scanner);
@@ -31,6 +31,9 @@ public class Main {
                     printUser(scanner);
                 }
                 if (next.equals("3")) {
+                    deleteUser(scanner);
+                }
+                if (next.equals("4")) {
                     break;
                 }
             }
@@ -52,5 +55,11 @@ public class Main {
         System.out.println("Enter balance:");
         final double balance = scanner.nextDouble();
         bankService.save(new Client(name, mail, balance));
+    }
+
+    private void deleteUser(Scanner scanner) {
+        System.out.println("Enter email:");
+        final String mail = scanner.next();
+        bankService.deleteByEmail(mail);
     }
 }

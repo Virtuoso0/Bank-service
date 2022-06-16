@@ -20,6 +20,10 @@ public class BankService {
         return clientRepository.findByEmail(email);
     }
 
+    public void deleteByEmail(String email) {
+        clientRepository.deleteByEmail(email);
+    }
+
     public void transfer(
             String fromEmail,
             String toEmail,
