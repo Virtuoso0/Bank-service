@@ -9,8 +9,10 @@ public class HibernateClientRepository implements ClientRepository{
     public void save(Client client) {
         final Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
+        client.getAccountList().forEach(session::persist);
         session.persist(client);
         session.getTransaction().commit();
+        session.close();
     }
 
     @Override
@@ -20,7 +22,9 @@ public class HibernateClientRepository implements ClientRepository{
         // Hibernate query language
         Query<Client> query = session.createQuery("from Client where email=:em", Client.class);
         query.setParameter("em", email);
-        return query.uniqueResult();
+        Client client = query.uniqueResult();
+        session.close();
+        return client;
     }
 
     @Override

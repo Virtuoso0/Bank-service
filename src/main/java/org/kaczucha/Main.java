@@ -2,9 +2,11 @@ package org.kaczucha;
 
 import org.kaczucha.repository.ClientRepository;
 import org.kaczucha.repository.HibernateClientRepository;
+import org.kaczucha.repository.entity.Account;
 import org.kaczucha.repository.entity.Client;
 import org.kaczucha.service.BankService;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -55,7 +57,9 @@ public class Main {
         final String mail = scanner.next();
         System.out.println("Enter balance:");
         final double balance = scanner.nextDouble();
-        bankService.save(new Client(name, mail, balance));
+        final Account account = new Account(0, "PLN");
+        final List<Account> accountList = List.of(account);
+        bankService.save(new Client(name, mail, accountList));
     }
 
     private void deleteUser(Scanner scanner) {

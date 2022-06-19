@@ -1,87 +1,44 @@
 package org.kaczucha.repository.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.Objects;
+import java.util.List;
 
 @Entity
 @Table(name = "USERS")
+@Data
+@NoArgsConstructor
 public class Client {
-
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "client_generator")
+    @SequenceGenerator(name = "client_generator", sequenceName = "users_seq", allocationSize = 1)
     @Column(name = "USER_ID")
     private Long id;
     @Column(name = "FIRST_NAME")
     private String name;
     @Column(name = "MAIL")
     private String email;
-    @Transient
-    private double balance;
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "USER_ID")
+    private List<Account> accountList;
 
-    public Client() {
-
-    }
-
-    public Client(String name, String email, double balance) {
+    public Client(String name, String email, List<Account> accountList) {
         this.name = name;
         this.email = email;
-        this.balance = balance;
-    }
-
-    @Override
-    public String toString() {
-        return "Client{" +
-                "name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", balance=" + balance +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Client client = (Client) o;
-        return Double.compare(client.balance, balance) == 0 &&
-                Objects.equals(name, client.name) &&
-                Objects.equals(email, client.email);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, email, balance);
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+        this.accountList = accountList;
     }
 
     public double getBalance() {
-        return balance;
+        if (!accountList.isEmpty())
+            return this.accountList.get(0).getBalance();
+        else
+            return 0;
     }
 
-    public void setBalance(double balance) {
-        this.balance = balance;
+    public void setBalance(double newBalance) {
+        if (!accountList.isEmpty())
+            this.accountList.get(0).setBalance(newBalance);
     }
 }

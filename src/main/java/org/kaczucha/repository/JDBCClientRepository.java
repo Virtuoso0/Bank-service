@@ -38,7 +38,7 @@ public class JDBCClientRepository implements ClientRepository {
             if(resultSet.next()) {
                 String name = resultSet.getString("first_name");
                 String mail = resultSet.getString("mail");
-                return new Client(name, mail, 0);
+                return new Client(name, mail, null);
             }
         } catch (Exception ex) {
             ex.printStackTrace();
