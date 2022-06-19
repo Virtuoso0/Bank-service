@@ -11,6 +11,6 @@
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
         <property name="show_sql">true</property>
         <property name="hbm2ddl.auto">none</property>
-        <mapping class="org.kaczucha.Client"></mapping>
+        <mapping class="org.kaczucha.repository.entity.Client"></mapping>
     </session-factory>
 </hibernate-configuration>

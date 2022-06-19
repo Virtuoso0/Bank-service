@@ -2,7 +2,7 @@ package org.kaczucha.repository;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-import org.kaczucha.Client;
+import org.kaczucha.repository.entity.Client;
 
 public class HibernateClientRepository implements ClientRepository{
     @Override

@@ -2,6 +2,7 @@ package org.kaczucha;
 
 import org.kaczucha.repository.ClientRepository;
 import org.kaczucha.repository.HibernateClientRepository;
+import org.kaczucha.repository.entity.Client;
 import org.kaczucha.service.BankService;
 
 import java.util.Scanner;

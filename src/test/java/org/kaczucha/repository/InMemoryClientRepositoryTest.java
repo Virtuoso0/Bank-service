@@ -2,7 +2,7 @@ package org.kaczucha.repository;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.kaczucha.Client;
+import org.kaczucha.repository.entity.Client;
 
 import java.util.ArrayList;
 import java.util.List;

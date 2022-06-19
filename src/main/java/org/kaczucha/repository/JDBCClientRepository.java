@@ -1,6 +1,6 @@
 package org.kaczucha.repository;
 
-import org.kaczucha.Client;
+import org.kaczucha.repository.entity.Client;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

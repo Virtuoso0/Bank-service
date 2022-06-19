@@ -1,4 +1,4 @@
-package org.kaczucha;
+package org.kaczucha.repository.entity;
 
 import jakarta.persistence.*;
 

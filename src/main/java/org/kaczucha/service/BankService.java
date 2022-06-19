@@ -1,6 +1,6 @@
 package org.kaczucha.service;
 
-import org.kaczucha.Client;
+import org.kaczucha.repository.entity.Client;
 import org.kaczucha.repository.ClientRepository;
 
 import java.util.Objects;

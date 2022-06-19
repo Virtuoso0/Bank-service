@@ -1,7 +1,6 @@
 package org.kaczucha.repository;
 
-import jdk.jshell.spi.ExecutionControl;
-import org.kaczucha.Client;
+import org.kaczucha.repository.entity.Client;
 
 import java.util.List;
 import java.util.NoSuchElementException;
