@@ -4,6 +4,8 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.kaczucha.repository.entity.Client;
 
+import java.util.NoSuchElementException;
+
 public class HibernateClientRepository implements ClientRepository{
     @Override
     public void save(Client client) {
@@ -24,7 +26,8 @@ public class HibernateClientRepository implements ClientRepository{
         query.setParameter("em", email);
         Client client = query.uniqueResult();
         session.close();
-        return client;
+        if(client == null) throw new NoSuchElementException("email is incorrect!");
+        else return client;
     }
 
     @Override
