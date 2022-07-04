@@ -1,5 +1,6 @@
 package org.kaczucha.service;
 
+import org.kaczucha.repository.ClientSpringJpaRepository;
 import org.kaczucha.repository.annotation.HibernateRepository;
 import org.kaczucha.repository.entity.Client;
 import org.kaczucha.repository.ClientRepository;
@@ -10,11 +11,11 @@ import java.util.Objects;
 
 @Service
 public class BankService {
-    private final ClientRepository clientRepository;
+    private final ClientSpringJpaRepository clientRepository;
 
     @Autowired
     public BankService(
-            @HibernateRepository ClientRepository clientRepository
+            ClientSpringJpaRepository clientRepository
     ) {
         this.clientRepository = clientRepository;
     }
