@@ -1,9 +1,7 @@
 package org.kaczucha.service;
 
 import org.kaczucha.repository.ClientSpringJpaRepository;
-import org.kaczucha.repository.annotation.HibernateRepository;
 import org.kaczucha.repository.entity.Client;
-import org.kaczucha.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

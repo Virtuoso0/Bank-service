@@ -19,7 +19,6 @@
         <junit.version>5.6.2</junit.version>
         <assertj-core.version>3.16.1</assertj-core.version>
         <postgresql.version>42.4.0</postgresql.version>
-        <hibernate-core.version>5.6.9.Final</hibernate-core.version>
         <lombok.version>1.18.24</lombok.version>
         <mockito-core.version>4.6.1</mockito-core.version>
     </properties>
@@ -66,11 +65,6 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>${postgresql.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>${hibernate-core.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>

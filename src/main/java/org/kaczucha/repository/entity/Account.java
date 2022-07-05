@@ -1,6 +1,5 @@
 package org.kaczucha.repository.entity;
 
-
 import javax.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
