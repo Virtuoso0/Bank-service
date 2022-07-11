@@ -1,5 +1,6 @@
 package org.kaczucha;
 
+import org.kaczucha.repository.ClientSpringJpaRepository;
 import org.kaczucha.repository.entity.Account;
 import org.kaczucha.repository.entity.Client;
 import org.kaczucha.service.BankService;
@@ -14,10 +15,12 @@ import java.util.Scanner;
 @SpringBootApplication
 public class Main implements CommandLineRunner {
     private final BankService bankService;
+    private final ClientSpringJpaRepository repository;
 
     @Autowired
-    public Main(BankService bankService) {
+    public Main(BankService bankService, ClientSpringJpaRepository repository) {
         this.bankService = bankService;
+        this.repository = repository;
     }
 
     public static void main(String[] args) {
@@ -26,27 +29,32 @@ public class Main implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        try (Scanner scanner = new Scanner(System.in)) {
-            while (true) {
-                System.out.println("1 - add user");
-                System.out.println("2 - find user");
-                System.out.println("3 - delete user");
-                System.out.println("4 - exit app");
-                final String next = scanner.next();
-                if (next.equals("1")) {
-                    addUser(scanner);
-                }
-                if (next.equals("2")) {
-                    printUser(scanner);
-                }
-                if (next.equals("3")) {
-                    deleteUser(scanner);
-                }
-                if (next.equals("4")) {
-                    break;
-                }
-            }
-        }
+
+        List<Client> list = repository.findByName("Patryk");
+        list.forEach(System.out::println);
+
+
+//        try (Scanner scanner = new Scanner(System.in)) {
+//            while (true) {
+//                System.out.println("1 - add user");
+//                System.out.println("2 - find user");
+//                System.out.println("3 - delete user");
+//                System.out.println("4 - exit app");
+//                final String next = scanner.next();
+//                if (next.equals("1")) {
+//                    addUser(scanner);
+//                }
+//                if (next.equals("2")) {
+//                    printUser(scanner);
+//                }
+//                if (next.equals("3")) {
+//                    deleteUser(scanner);
+//                }
+//                if (next.equals("4")) {
+//                    break;
+//                }
+//            }
+//        }
     }
 
     private void printUser(Scanner scanner) {
@@ -63,7 +71,7 @@ public class Main implements CommandLineRunner {
         final String mail = scanner.next();
         System.out.println("Enter balance:");
         final double balance = scanner.nextDouble();
-        final Account account = new Account(0, "PLN");
+        final Account account = new Account(balance, "PLN");
         final List<Account> accountList = List.of(account);
         bankService.save(new Client(name, mail, accountList));
     }
