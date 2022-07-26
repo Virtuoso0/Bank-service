@@ -1,10 +1,13 @@
 package org.kaczucha.service;
 
+import org.kaczucha.controller.dto.ClientResponse;
 import org.kaczucha.repository.ClientSpringJpaRepository;
+import org.kaczucha.repository.entity.Account;
 import org.kaczucha.repository.entity.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -24,6 +27,19 @@ public class BankService {
 
     public Client findByEmail(String email) {
         return clientRepository.findByEmail(email);
+    }
+
+    public ClientResponse findResponseByEmail(String email) {
+        final Client client = findByEmail(email);
+        final List<Long> accountsId = client.getAccountList().stream().map(Account::getId).toList();
+        final ClientResponse response = ClientResponse.builder()
+                .id(client.getId())
+                .name(client.getName())
+                .email(client.getEmail())
+                .accounts(accountsId)
+                .build();
+
+        return response;
     }
 
     public void deleteByEmail(String email) {
