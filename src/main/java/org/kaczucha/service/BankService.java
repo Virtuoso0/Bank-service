@@ -1,27 +1,34 @@
 package org.kaczucha.service;
 
+import org.kaczucha.controller.dto.ClientRequest;
 import org.kaczucha.controller.dto.ClientResponse;
 import org.kaczucha.repository.ClientSpringJpaRepository;
-import org.kaczucha.repository.entity.Account;
 import org.kaczucha.repository.entity.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Objects;
 
 @Service
 public class BankService {
     private final ClientSpringJpaRepository clientRepository;
+    private final ClientMapper clientMapper;
 
     @Autowired
     public BankService(
-            ClientSpringJpaRepository clientRepository
+            ClientSpringJpaRepository clientRepository,
+            ClientMapper clientMapper
     ) {
         this.clientRepository = clientRepository;
+        this.clientMapper = clientMapper;
     }
 
     public void save(Client client) {
+        clientRepository.save(client);
+    }
+
+    public void save(ClientRequest clientRequest) {
+        Client client = clientMapper.map(clientRequest);
         clientRepository.save(client);
     }
 
@@ -31,14 +38,7 @@ public class BankService {
 
     public ClientResponse findResponseByEmail(String email) {
         final Client client = findByEmail(email);
-        final List<Long> accountsId = client.getAccountList().stream().map(Account::getId).toList();
-        final ClientResponse response = ClientResponse.builder()
-                .id(client.getId())
-                .name(client.getName())
-                .email(client.getEmail())
-                .accounts(accountsId)
-                .build();
-
+        final ClientResponse response = clientMapper.map(client);
         return response;
     }
 

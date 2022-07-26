@@ -1,6 +1,7 @@
 package org.kaczucha.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.kaczucha.controller.dto.ClientRequest;
 import org.kaczucha.controller.dto.ClientResponse;
 import org.kaczucha.repository.entity.Client;
 import org.kaczucha.service.BankService;
@@ -27,7 +28,7 @@ public class BankController {
     //powinniśmy stosować DTO
     @PostMapping(path = "/api/users")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public void createClient(@RequestBody Client client) {
+    public void createClient(@RequestBody ClientRequest client) {
         service.save(client);
     }
 }
