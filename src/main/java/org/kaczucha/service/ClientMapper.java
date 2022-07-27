@@ -6,7 +6,6 @@ import org.kaczucha.repository.entity.Account;
 import org.kaczucha.repository.entity.Client;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
 import java.util.List;
 
 @Component

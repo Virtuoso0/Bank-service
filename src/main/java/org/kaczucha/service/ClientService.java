@@ -2,19 +2,19 @@ package org.kaczucha.service;
 
 import org.kaczucha.controller.dto.ClientRequest;
 import org.kaczucha.controller.dto.ClientResponse;
-import org.kaczucha.repository.ClientSpringJpaRepository;
+import org.kaczucha.repository.ClientRepository;
 import org.kaczucha.repository.entity.Client;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ClientService {
-    private final ClientSpringJpaRepository clientRepository;
+    private final ClientRepository clientRepository;
     private final ClientMapper clientMapper;
 
     @Autowired
     public ClientService(
-            ClientSpringJpaRepository clientRepository,
+            ClientRepository clientRepository,
             ClientMapper clientMapper
     ) {
         this.clientRepository = clientRepository;

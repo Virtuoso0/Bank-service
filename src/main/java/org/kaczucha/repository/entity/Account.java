@@ -1,6 +1,9 @@
 package org.kaczucha.repository.entity;
 
 import javax.persistence.*;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,6 +11,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "ACCOUNTS")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "account_generator")
@@ -18,6 +23,8 @@ public class Account {
     private double balance;
     @Column(name = "CURRENCY")
     private String currency;
+    @Column(name = "USER_ID")
+    private long userId;
 
     public Account(double balance, String currency) {
         this.balance = balance;
