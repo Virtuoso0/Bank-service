@@ -1,5 +1,5 @@
-# Bank-service
+# 🏦Bank-service
 
-🏦 Simple logic of the bank application
+Simple logic of the bank application
 
-The main goal of the project was to test **Spring's** capabilities.
+The main goal of the project was to test :seedling:**Spring's** capabilities.
