@@ -19,8 +19,6 @@ public class AccountController {
         return new ResponseEntity<>(account, HttpStatus.ACCEPTED);
     }
 
-    //nie do końca poprawny sposób
-    //powinniśmy stosować DTO
     @PostMapping(path = "/api/account")
     @ResponseStatus(code = HttpStatus.CREATED)
     public void createAccount(@RequestBody AccountRequest accountRequest) {

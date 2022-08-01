@@ -5,15 +5,13 @@ import org.kaczucha.controller.dto.AccountRequest;
 import org.kaczucha.controller.dto.AccountResponse;
 import org.kaczucha.repository.AccountRepository;
 import org.kaczucha.repository.entity.Account;
-import org.kaczucha.repository.entity.Client;
 import org.springframework.stereotype.Service;
-
-import java.util.Objects;
 
 @Service
 @AllArgsConstructor
 public class AccountService {
     private final AccountRepository repository;
+    private final CurrencyService currencyService;
 
     public AccountResponse findById(Long id) {
         AccountResponse accountResponse = repository
@@ -48,14 +46,41 @@ public class AccountService {
         if (fromAccountId == toAccountId) {
             throw new IllegalArgumentException("fromEmail and toEmail cant be equal!");
         }
-        Account fromAccount = repository.getOne(fromAccountId);
-        Account toAccount = repository.getOne(toAccountId);
-        if (fromAccount.getBalance() - amount >= 0) {
-            fromAccount.setBalance(fromAccount.getBalance() - amount);
-            toAccount.setBalance(toAccount.getBalance() + amount);
-        } else {
+
+        Account fromAccount = repository.getReferenceById(fromAccountId);
+        Account toAccount = repository.getReferenceById(toAccountId);
+
+        if (fromAccount.getBalance() - amount < 0) {
             throw new NoSufficientFundsException("Not enough funds!");
         }
+
+        if (fromAccount.getCurrency().equals(toAccount.getCurrency())) {
+            fromAccount.setBalance(fromAccount.getBalance() - amount);
+            toAccount.setBalance(toAccount.getBalance() + amount);
+        }
+        else if (fromAccount.getCurrency().equals("PLN")) {
+            final String currency = toAccount.getCurrency();
+            final double currencyRate = currencyService.getCurrencyRates(currency);
+            fromAccount.setBalance(fromAccount.getBalance() - amount);
+            toAccount.setBalance(toAccount.getBalance() + amount / currencyRate);
+        }
+        else if (toAccount.getCurrency().equals("PLN")) {
+            final String currency = fromAccount.getCurrency();
+            final double currencyRate = currencyService.getCurrencyRates(currency);
+            fromAccount.setBalance(fromAccount.getBalance() - amount);
+            toAccount.setBalance(toAccount.getBalance() + amount * currencyRate);
+        }
+        else {
+            final String fromCurrency = fromAccount.getCurrency();
+            final String toCurrency = toAccount.getCurrency();
+            final double fromCurrencyRate = currencyService.getCurrencyRates(fromCurrency);
+            final double toCurrencyRate = currencyService.getCurrencyRates(toCurrency);
+            final double finalRate = fromCurrencyRate / toCurrencyRate;
+
+            fromAccount.setBalance(fromAccount.getBalance() - amount);
+            toAccount.setBalance(toAccount.getBalance() + amount * finalRate);
+        }
+
         repository.save(fromAccount);
         repository.save(toAccount);
     }

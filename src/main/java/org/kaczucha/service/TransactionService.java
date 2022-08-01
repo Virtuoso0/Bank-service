@@ -16,7 +16,7 @@ public class TransactionService {
 
     public void createTransaction(TransactionRequest transactionRequest) {
         final double amount = transactionRequest.getAmount();
-        final String currency = transactionRequest.getCurrency();
+        final String currency = "PLN";
         final long fromAccountId = transactionRequest.getFromAccountId();
         final long toAccountId = transactionRequest.getToAccountId();
 
